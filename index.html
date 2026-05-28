@@ -26,8 +26,6 @@ body{
     overflow-x:hidden;
 }
 
-/* TOP */
-
 .top-box{
     position:relative;
     width:100%;
@@ -144,8 +142,6 @@ body{
     text-align:center;
 }
 
-/* DOWNLOAD */
-
 .download-wrap{
     margin-top:38px;
     border:5px solid black;
@@ -188,15 +184,11 @@ body{
     letter-spacing:.5px;
 }
 
-/* WAVE */
-
 .wave{
     position:absolute;
     bottom:-2px;
     width:100%;
 }
-
-/* INFO CARD */
 
 .info-card{
     width:92%;
@@ -255,8 +247,6 @@ body{
     font-size:13px;
 }
 
-/* GUIDE */
-
 .guide-card{
     width:92%;
     max-width:420px;
@@ -305,8 +295,6 @@ body{
     font-weight:600;
 }
 
-/* IOS POPUP */
-
 .ios-popup{
     position:fixed;
     inset:0;
@@ -323,18 +311,6 @@ body{
     background:#1c1c1edc;
     border-radius:18px;
     overflow:hidden;
-    animation:popup .18s ease;
-}
-
-@keyframes popup{
-    from{
-        transform:scale(.85);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
 }
 
 .popup-text{
@@ -368,93 +344,6 @@ body{
 
 .install-btn{
     color:#0a84ff;
-}
-
-/* KEY POPUP */
-
-.key-popup{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:10000;
-    backdrop-filter:blur(6px);
-}
-
-.key-box{
-    width:340px;
-    background:#ffffff;
-    border-radius:28px;
-    padding:26px;
-    text-align:center;
-    animation:popup .2s ease;
-    box-shadow:0 15px 40px rgba(0,0,0,.2);
-}
-
-.key-title{
-    font-size:28px;
-    font-weight:900;
-    color:#111;
-    margin-bottom:8px;
-}
-
-.key-sub{
-    color:#666;
-    font-size:14px;
-    margin-bottom:20px;
-    line-height:1.6;
-}
-
-.key-input{
-    width:100%;
-    height:58px;
-    border:none;
-    outline:none;
-    border-radius:18px;
-    background:#f3f5ff;
-    padding:0 18px;
-    font-size:18px;
-    font-weight:700;
-    text-align:center;
-    margin-bottom:18px;
-    border:2px solid transparent;
-}
-
-.key-input:focus{
-    border-color:#4d7dff;
-}
-
-.timer{
-    font-size:34px;
-    font-weight:900;
-    color:#2b7cff;
-    margin-bottom:20px;
-}
-
-.key-btn{
-    width:100%;
-    height:58px;
-    border:none;
-    border-radius:18px;
-    background:linear-gradient(135deg,#2b7cff,#8a49ff);
-    color:white;
-    font-size:18px;
-    font-weight:800;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.key-btn:active{
-    transform:scale(.97);
-}
-
-.status{
-    margin-top:14px;
-    font-size:14px;
-    font-weight:700;
-    color:#666;
 }
 
 </style>
@@ -638,7 +527,7 @@ Hủy
 </button>
 
 <button class="install-btn"
-onclick="showKeyPopup()">
+onclick="downloadNow()">
 Cài đặt
 </button>
 
@@ -648,47 +537,7 @@ Cài đặt
 
 </div>
 
-<!-- KEY POPUP -->
-
-<div class="key-popup" id="keyPopup">
-
-<div class="key-box">
-
-<div class="key-title">
-🔐 Nhập Key
-</div>
-
-<div class="key-sub">
-Nhập key để mở tải xuống ứng dụng Zsm Meocuaios
-</div>
-
-<input
-type="text"
-class="key-input"
-id="keyInput"
-placeholder="Nhập key tại đây">
-
-<div class="timer" id="timer">
-30s
-</div>
-
-<button class="key-btn"
-onclick="verifyKey()">
-XÁC NHẬN TẢI
-</button>
-
-<div class="status" id="status">
-⏳ Key sẽ hết hạn sau 30 giây
-</div>
-
-</div>
-
-</div>
-
 <script>
-
-let countdown = 30;
-let timerInterval;
 
 function downloadApp(){
 
@@ -702,78 +551,17 @@ function closePopup(){
 
 }
 
-function showKeyPopup(){
+function downloadNow(){
 
-    document.getElementById("iosPopup").style.display = "none";
+    alert("🚀 Đang tải MeocuaiosZsm");
 
-    document.getElementById("keyPopup").style.display = "flex";
-
-    countdown = 30;
-
-    document.getElementById("timer").innerText = countdown + "s";
-
-    clearInterval(timerInterval);
-
-    timerInterval = setInterval(()=>{
-
-        countdown--;
-
-        document.getElementById("timer").innerText = countdown + "s";
-
-        if(countdown <= 0){
-
-            clearInterval(timerInterval);
-
-            document.getElementById("status").innerHTML =
-            "❌ Hết thời gian nhập key";
-
-            document.getElementById("timer").innerText = "0s";
-
-        }
-
-    },1000);
-
-}
-
-function verifyKey(){
-
-    let key = document.getElementById("keyInput").value;
-
-    if(countdown <= 0){
-
-        alert("Key đã hết hạn ⌛");
-
-        return;
-
-    }
-
-    if(key === "MEOCUAIOS"){
-
-        clearInterval(timerInterval);
-
-        document.getElementById("status").innerHTML =
-        "✅ Key hợp lệ, đang tải xuống...";
-
-        setTimeout(()=>{
-
-            alert("🚀 Đang tải MeocuaiosZsm");
-
-            // LINK IPA
-            window.location.href =
-            "https://example.com/app.ipa";
-
-        },1200);
-
-    }else{
-
-        document.getElementById("status").innerHTML =
-        "❌ Key không đúng";
-
-    }
+    window.location.href =
+    "https://example.com/app.ipa";
 
 }
 
 </script>
 
 </body>
-    </html>
+</html>
+```
